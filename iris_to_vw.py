@@ -1,28 +1,19 @@
+"""
+Loads Iris dataset and prints to vw compatible format
+
+"""
+
 from sklearn import datasets
 
-iris = datasets.load_iris()
+X, Y = datasets.load_iris(return_X_y=True)
 
-for i in range(iris.target.shape[0]):
-    y = iris.target[i]
-    X = iris.data[i]
-    d = {
-        "target": y,
-        "sepal_length": X[0],
-        "sepal_width": X[1],
-        "petal_length": X[2],
-        "petal_width": X[3]
-    }
-
+for x, y in zip(X, Y):
     vw_line_fmt = "%d | " + " %s:%d" * 4
     vw_line = vw_line_fmt % (
-        d["target"] + 1,
-        "L",
-        d["sepal_length"],
-        "W",
-        d["sepal_width"],
-        "P",
-        d["petal_length"],
-        "I",
-        d["petal_width"]
+        y + 1,
+        "L", x[0],
+        "W", x[1],
+        "P", x[2],
+        "I", x[3],
     )
     print(vw_line)
